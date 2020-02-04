@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+#SBATCH --partition=bgmp        ### Partition (like a queue in PBS)
+#SBATCH --job-name=FALCON-ecoli     ### Job Name
+#SBATCH --output=slurm-%j-%x.out         ### File in which to store job output
+#SBATCH --time=0-5:00:00       ### Wall clock time limit in Days-HH:MM:SS
+#SBATCH --nodes=1               ### Number of nodes needed for the job
+#SBATCH --ntasks-per-node=1     ### Number of tasks to be launched per Node
+#SBATCH --account=bgmp      ### Account used for job submission
+#SBATCH --cpus-per-task=7    ### Number of cpus (cores) per task
+
+#conda activate anaconda2/2019.07
+
+conda activate bgmp_py3
+
+#use bam2fasta for converting bams to fasta
+
+module purge
+module load easybuild  icc/2017.1.132-GCC-6.3.0-2.27  impi/2017.1.132
+module load FALCON/1.8.8
+
+fc_run ./fc_run_ecoli.cfg
